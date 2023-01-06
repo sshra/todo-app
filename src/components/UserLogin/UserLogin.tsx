@@ -27,7 +27,6 @@ export const UserLogin = (): React.ReactElement => {
       let user: IToDoUser | null = Users.getUserByName(name);
       if (user === null) {
         user = Users.addUser(name)
-        dispatch(setUser(user));
       }
       dispatch(setUser(user));
     }
@@ -48,7 +47,11 @@ export const UserLogin = (): React.ReactElement => {
       </div>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>New User Name:</Form.Label>
+          {
+            userList.length > 0
+              ? <Form.Label>New or Existing User Name:</Form.Label>
+              : <Form.Label>New User Name:</Form.Label>
+          }
           <Form.Control ref={nameRef}
             type="text"
             placeholder="Enter your name"

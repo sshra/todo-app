@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 import { generateRandomId } from '../utils/generateRandomId';
 import { LS } from './localStorage';
 
@@ -24,7 +25,7 @@ export class Users {
   public static addUser = (name: string): IToDoUser => {
     const newUser: IToDoUser = {
       uid: generateRandomId(),
-      name
+      name: capitalizeFirstLetter(name)
     };
     const users = this.getList();
     users.push(newUser);
@@ -41,7 +42,7 @@ export class Users {
   }
 
   public static getList = (): IToDoUser[] => {
-    const users = LS.getUsers();
+    const users = LS.getUsers().sort((a, b) => a.name < b.name ? -1 : 1);
     return isToDoUserArray(users) ? users : [];
   }
 }
